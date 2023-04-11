@@ -1,25 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>css2webgl</title>
-<style>
-* {
-  box-sizing: border-box;
-}
+  <head>
+    <meta charset="utf-8" />
+    <title>css2webgl</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-html, body {
-  font-family: sans-serif;
-}
+      body {
+        font-family: sans-serif;
+        width: 600px;
+        margin: 0px auto;
+        margin-top: 40px;
+      }
 
-#box {
+      h1 {
+        font-weight: normal;
+        font-size: 2em;
+        margin-top: 0;
+        margin-bottom: 4px;
+      }
 
-}
-</style>
-</head>
-<body>
+      h3 {
+        font-weight: normal;
+        font-size: 1.2em;
+        margin-top: 0;
+      }
 
-<div id="box"></div>
+      #container {
+        margin-top: 40px;
+        border: 2px solid #eee;
+        border-radius: 30px;
+      }
 
-</body>
+      @keyframes slide {
+        from {
+          left: 0px;
+        }
+
+        to {
+          left: 540px;
+        }
+      }
+
+      #ball {
+        width: 60px;
+        height: 60px;
+        background-color: black;
+        border-radius: 30px;
+        position: relative;
+        animation: 3s infinite alternate slide;
+        animation-timing-function: linear;
+      }
+
+      #ball:hover {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>css2webgl</h1>
+    <h3>test of syncing elements to WebGL, & WebXR</h3>
+
+    <div id="container">
+      <div id="ball"></div>
+    </div>
+  </body>
 </html>
