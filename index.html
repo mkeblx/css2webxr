@@ -30,8 +30,8 @@
 
       #container {
         margin-top: 40px;
-        border: 2px solid #eee;
-        border-radius: 30px;
+        outline: 3px solid #eee;
+        border-radius: 35px;
       }
 
       @keyframes slide {
@@ -50,12 +50,15 @@
         background-color: black;
         border-radius: 30px;
         position: relative;
-        animation: 3s infinite alternate slide;
+        animation: 5s infinite alternate slide;
         animation-timing-function: linear;
       }
 
-      #ball:hover {
-        cursor: pointer;
+      #output {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 3em;
+        font-weight: normal;
       }
     </style>
   </head>
@@ -66,5 +69,25 @@
     <div id="container">
       <div id="ball"></div>
     </div>
+
+    <div id="output"></div>
+
+    <script>
+      'use strict';
+
+      const ball = document.getElementById('ball');
+      const output = document.getElementById('output');
+
+      function updatePosition() {
+        let parent = ball.parentElement;
+        let x = ball.offsetLeft - parent.offsetLeft;
+
+        output.innerHTML = x;
+
+        window.requestAnimationFrame(updatePosition);
+      }
+
+      updatePosition();
+    </script>
   </body>
 </html>
