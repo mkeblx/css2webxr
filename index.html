@@ -62,6 +62,7 @@
       }
 
       #webgl {
+        position: relative;
         margin-top: 40px;
       }
     </style>
@@ -88,7 +89,7 @@
     </script>
     <script type="module">
       import * as THREE from 'three';
-      console.log(THREE);
+      import { VRButton } from 'three/addons/webxr/VRButton.js';
 
       const ball = document.getElementById('ball');
       const output = document.getElementById('output');
@@ -107,23 +108,25 @@
       updatePosition();
 
       // setup webgl
+      const container = document.getElementById('webgl');
       const size = [600, 200];
+      const MAX = 540;
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
-        50,
+        40,
         size[0] / size[1],
         0.1,
         1000
       );
-      camera.position.x = 3;
-      camera.position.z = 5;
+      camera.position.y = 1.7;
 
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
       });
       renderer.setSize(...size);
-      document.body.appendChild(renderer.domElement);
+      renderer.xr.enabled = true;
+      container.appendChild(renderer.domElement);
 
       const dirLight = new THREE.DirectionalLight(0xffffff, 1);
       dirLight.position.set(-2, 3, 2);
@@ -131,24 +134,34 @@
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
       scene.add(ambientLight);
 
-      const geometry = new THREE.SphereGeometry();
+      const axesHelper = new THREE.AxesHelper(1);
+      scene.add(axesHelper);
+
+      const group = new THREE.Group();
+      group.position.z = -1;
+      group.position.y = 1.7;
+      group.position.x = -0.5;
+
+      const geometry = new THREE.SphereGeometry(0.1);
       const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
       const sphere = new THREE.Mesh(geometry, material);
-      scene.add(sphere);
+      group.add(sphere);
 
-      const cubeGeo = new THREE.BoxGeometry(0.05, 3, 0.01);
+      const cubeGeo = new THREE.BoxGeometry(0.05, 0.5, 0.01);
       const cube = new THREE.Mesh(cubeGeo, material);
-      scene.add(cube);
+      group.add(cube);
+      const cube2 = new THREE.Mesh(cubeGeo, material);
+      cube2.position.x = 1;
+      group.add(cube2);
 
-      function animate() {
-        requestAnimationFrame(animate);
+      scene.add(group);
 
-        sphere.position.x = ballPosition / 100;
-
+      renderer.setAnimationLoop(function () {
+        sphere.position.x = ballPosition / MAX;
         renderer.render(scene, camera);
-      }
+      });
 
-      animate();
+      container.appendChild(VRButton.createButton(renderer));
     </script>
   </body>
 </html>
