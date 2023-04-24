@@ -1,4 +1,3 @@
-# css2webgl
+# css2webxr
 
-pull out basic test page of CSS animation in WebGL
-
+Demo of using CSS animation values in WebXR
